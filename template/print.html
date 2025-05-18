@@ -1,0 +1,130 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+    .full-height-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .centered-form {
+        text-align: center;
+    }
+    .print-btn {
+        margin: 20px 0;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: block;
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        .print-area, .print-area * {
+            visibility: visible;
+        }
+        .print-area {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+        .print-btn {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    function printPage() {
+        window.print();
+    }
+    printPage();
+</script>
+
+<div class="container">
+    <div class="col-12 col-lg-12 d-flex align-items-stretch print-area">
+        <div class="card w-100 mt-3 mb-5">
+          <div class="card-body p-4">
+            <h5 class="card-title text-center fw-semibold">Sri Madhav Sukrish Bakery & Sweets</h5>
+            <p class="text-center">Arasur Main Road, Pudupettai, Panruti, Tamil Nadu - 607108</p>
+            
+            <br>
+            <div class="customer-details mb-4">
+                <p>To:</p>
+              <ul>
+                <li style="list-style: none;"><b>Name:</b> {{ user_dataaa.username }}</li>
+                <li style="list-style: none;"><b>Address:</b> {{ user_dataaa.address }}, {{ user_dataaa.postcode }}</li>
+                <li style="list-style: none;"><b>Near by: </b>{{ user_dataaa.near_by }}</li>
+                <li style="list-style: none;"><b>Phone Number:</b> {{ user_dataaa.phone_number }}</li>
+              </ul>
+            </div>
+      
+            <div class="table-responsive">
+              <table class="table text-nowrap mb-0 align-middle">
+                {% if data %}
+                <thead class="text-dark fs-4">
+                  <tr>
+                    <th class="border-bottom-0">Image</th>
+                    <th class="border-bottom-0">Category</th>
+                    <th class="border-bottom-0">Name</th>
+                    <th class="border-bottom-0">Qty</th>
+                    <th class="border-bottom-0">Price</th>
+                    <th class="border-bottom-0">Weight</th>
+                    <th class="border-bottom-0">Inches</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for x in data %}
+                  <tr>
+                    <td class="border-bottom-0"><img src="{{ x.product.img1.url }}" alt="" width="35" height="35" class="rounded-circle"></td>
+                    <td class="border-bottom-0">{{ x.product.category }}</td>
+                    <td class="border-bottom-0">{{ x.product.name }}</td>
+                    <td class="border-bottom-0">{{ x.quantity }}</td>
+                    <td class="border-bottom-0">₹ {{ x.total_price }}</td>
+                    <td class="border-bottom-0">{{ x.product.weight }}</td>
+                    <td class="border-bottom-0">{{ x.product.inches }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+                {% else %}
+                <tr>
+                  <td colspan="7"><center>-----------------No data found-----------------</center></td>
+                </tr>
+                {% endif %}
+              </table>
+              <div class="d-flex justify-content-end">
+                <b>Total: {{ tot }} ₹</b>
+              </div>
+            </div>
+            <br><br>
+        
+
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <p><b>Signature of Receiver:</b></p>
+                  <p>________________________</p>
+                </div>
+                <div>
+                  <p>Time: {{ time }}</p>
+                  <p>Date: {{ date }}</p>
+                </div>
+              </div>
+              
+              
+          </div>
+        </div>
+      </div>
+      
+</div>
+
+
+{% endblock %}

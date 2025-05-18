@@ -1,0 +1,123 @@
+
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+   .full-height-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .centered-form {
+            text-align: center;
+        }
+</style>
+
+
+
+<div class="container">
+  <div class="col-12 col-lg-12 d-flex align-items-stretch">
+    <div class="card w-100 mt-3 mb-5">
+      <div class="card-body p-4 ">
+        <div class=" ">
+          <h5 class="card-title fw-semibold ">User Details</h5>
+       
+        
+        <script>
+            function confirmCancel() {
+                return confirm('Are you sure you want to cancel the order?');
+            }
+        </script>
+        </div>
+        <br>
+        <div class="table-responsive">
+          <table class="table text-nowrap mb-0 align-middle">
+            {% if data %}
+            <thead class="text-dark fs-4">
+              <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">User Name</h6>
+              </th>
+              <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Phone Number</h6>
+              </th>
+              <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Address</h6>
+              </th>
+              <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Post Code</h6>
+              </th>
+              <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Near By</h6>
+              </th> 
+              <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Joined on</h6>
+              </th>  
+              <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Last Login</h6>
+              </th>  
+              </tr>
+            </thead>
+            <tbody>
+             
+             {% for x in data %}
+             <tr>
+               <!-- <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{ forloop.counter }}</h6></td> -->
+               <td class="border-bottom-0">
+                <p class="mb-0 fw-normal">{{ x.username }}</p>
+              </td>
+              <td class="border-bottom-0">
+                <p class="mb-0 fw-normal">{{ x.phone_number }}</p>
+              </td>
+              <td class="border-bottom-0">
+                <p class="mb-0 fw-normal">{{ x.address }}</p>
+              </td>
+              <td class="border-bottom-0">
+               <p class="mb-0 fw-normal">{{ x.postcode }}</p>
+             </td>
+             <td class="border-bottom-0">
+               <p class="mb-0 fw-normal">{{ x.near_by }}</p>
+             </td>
+            <td class="border-bottom-0">
+              <p class="mb-0 fw-normal">{{ x.date_joined }}</p>
+            </td>
+            <td class="border-bottom-0">
+              <p class="mb-0 fw-normal">{{ x.last_login }}</p>
+            </td>
+             </tr> 
+              {% endfor %}  
+             {% else %}
+             <tr>
+              
+                <td colspan="5"><center>-----------------No data found-----------------</center></td>
+              
+             </tr>
+             {% endif %}       
+            </tbody>
+          </table>
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+     
+
+
+
+
+
+
+
+

@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Submit a Review{% endblock %}
+
+{% block content %}
+
+<style>
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.rating input {
+    display: none;
+}
+
+
+
+
+.rating label {
+    font-size: 2rem;
+    color: rgb(245, 155, 155);
+    cursor: pointer;
+    padding: 0 0.1em;
+}
+
+.rating input:checked ~ label {
+    color: #f5b301;
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #f5b301;
+}
+
+.font{
+    font-family: 'Courier New', Courier, monospace !important;
+    font-weight: bolder;
+  }
+</style>
+
+<div class="container">
+
+<h2 class="font mt-4 color">Review</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <center>
+      <h5 class="text-white">Give your valuable rating</h5>
+
+    </center>
+    <div class="rating">
+        <input type="radio" id="star5" name="stars" value="5" />
+        <label class="gold" for="star5" title="5 stars">✭</label>
+        <input type="radio" id="star4" name="stars" value="4" />
+        <label class="gold" for="star4" title="4 stars">✭</label>
+        <input type="radio" id="star3" name="stars" value="3" />
+        <label class="gold" for="star3" title="3 stars">✭</label>
+        <input type="radio" id="star2" name="stars" value="2" />
+        <label class="gold" for="star2" title="2 stars">✭</label>
+        <input type="radio" id="star1" name="stars" value="1" required />
+        <label class="gold" for="star1" title="1 star">✭</label>
+    </div>
+    <center>
+    <div class="col-12 col-md-6">
+        <label class="text-white" for="comments">Comments:</label><br>
+        <textarea id="comments" name="comments" required rows="4" class="w-75 form-control"></textarea>
+    </div>
+    </center><br>
+    <center><button class="btn btn-primary" type="submit">Submit</button></center>
+</form>
+<br>
+
+
+<div class="container">
+  <div class="col-12 col-lg-12 d-flex align-items-stretch">
+    <div class="card w-100 mt-4 mb-4">
+      <div class="card-body p-4 ">
+        <div class="d-flex justify-content-between ">
+          <h5 class="card-title fw-semibold font color">Your Review</h5>
+        </div>
+        <br>
+        <div class="table-responsive">
+          <table class="table text-nowrap mb-0 align-middle">
+            {% if data %}
+            <thead class="text-dark fs-4">
+              <tr>
+                <!-- <th class="border-bottom-0">
+                  <h6 class="fw-semibold mb-0">S.No</h6>
+                </th> -->
+                <th class="border-bottom-0">
+                  <h6 class="fw-semibold mb-0">Stars</h6>
+                </th>
+                
+                <th class="border-bottom-0">
+                  <h6 class="fw-semibold mb-0">Comments</h6>
+                </th>
+                <th class="border-bottom-0">
+                  <h6 class="fw-semibold mb-0">Action</h6>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+             
+             {% for x in data %}
+             <tr>
+               <!-- <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{ forloop.counter }}</h6></td> -->
+              
+               <td class="border-bottom-0">
+                <p class="mb-0 fw-normal">
+                    {% for i in star_range %}
+                        {% if i <= x.num_of_stars %}
+                            <span style="color: #f5b301;">✭</span>
+                        {% else %}
+                            <span style="color: #e0e0e0;">✭</span>
+                        {% endif %}
+                    {% endfor %}
+                </p>
+            </td>
+               <td class="border-bottom-0">
+                <p class="mb-0 fw-normal">{{ x.comments }}</p>
+              </td>
+              
+               <td class="border-bottom-0">
+                 <a href="/remove_reviews/{{ x.id }}"><i style="color: red; font-size: 20px; margin-left: 15px;" class="fa fa-trash"></i></a>
+               </td>
+             </tr> 
+              {% endfor %}  
+             {% else %}
+             <tr>
+              
+                <td colspan="5"><center>-----------------No data found-----------------</center></td>
+              
+             </tr>
+             {% endif %}       
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-end">
+           
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+<div class="container">
+  <div class="col-12 col-lg-12 d-flex align-items-stretch">
+    <div class="card w-100 mt-5 mb-5">
+      <div class="card-body p-4 ">
+        <div class="d-flex justify-content-between ">
+          <h5 class="card-title fw-semibold font color">Over all Reviews</h5>
+        </div>
+        <br>
+        <div class="table-responsive">
+          <table class="table text-nowrap mb-0 align-middle">
+            {% if data1 %}
+            <thead class="text-dark fs-4">
+              <tr>
+                <!-- <th class="border-bottom-0">
+                  <h6 class="fw-semibold mb-0">S.No</h6>
+                </th> -->
+                <th class="border-bottom-0">
+                  <h6 class="fw-semibold mb-0">Stars</h6>
+                </th>
+                
+                <th class="border-bottom-0">
+                  <h6 class="fw-semibold mb-0">Comments</h6>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+             
+             {% for x in data1 %}
+             <tr>
+               <!-- <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{ forloop.counter }}</h6></td> -->
+              
+               <td class="border-bottom-0">
+                <p class="mb-0 fw-normal">
+                    {% for i in star_range %}
+                        {% if i <= x.num_of_stars %}
+                            <span style="color: #f5b301;">✭</span>
+                        {% else %}
+                            <span style="color: #ddd;">✭</span>
+                        {% endif %}
+                    {% endfor %}
+                </p>
+            </td>
+               <td class="border-bottom-0">
+                <p class="mb-0 fw-normal">{{ x.comments }}</p>
+              </td>
+             </tr> 
+              {% endfor %}  
+             {% else %}
+             <tr>
+              
+                <td colspan="5"><center>-----------------No data found-----------------</center></td>
+              
+             </tr>
+             {% endif %}       
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-end">
+           
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,243 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+   .full-height-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .centered-form {
+            text-align: center;
+        }
+
+
+        @media screen and (max-width: 480px) {
+    
+  }
+  .name{
+      font-size: 14px;
+  }
+  .product_para{
+      font-size: 12px;
+      margin-top: -12;
+  }
+
+  .quantity{
+      border: none;
+      width: 25px;
+      margin: 0px;
+      padding: 0px;
+      text-align: center;
+      font-size: 12px;
+  }
+ 
+  .qty{
+      margin-top: -14px;
+  }
+  .cart-btn{
+      font-size: 12px;
+      padding: 3px;
+      color:white;
+      background-color:green;
+      margin-top: 6px;
+      font-weight: bolder;
+  }
+ 
+  
+</style>
+
+<div class="container d-flex justify-content-between mt-3">
+  <a href="/user_history" class="btn btn-danger">History</a>
+
+  {% if data1 and data1.number == 0 %}
+  <form method="POST" onsubmit="return confirmCancel()">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary">Cancel Orders</button>
+  </form>
+{% endif %}
+
+
+<script>
+function confirmCancel() {
+    return confirm('Are you sure you want to cancel the order?');
+}
+</script>
+</div>
+
+
+
+
+<!-- 
+<div class="container ">
+  <div class="col-12 col-lg-12 d-flex align-items-stretch">
+    <div class="card w-100 mt-3 mb-5">
+      <div class="card-body p-4 ">
+        <div class=" ">
+          <h5 class="card-title fw-semibold font color">Order</h5>
+        
+        </div>
+        <br>
+        <div class="table-responsive">
+          <table class="table text-nowrap mb-0 align-middle">
+            {% if data %}
+            <thead class="text-dark fs-4">
+              <tr>
+            
+                <th class="border-bottom-0">
+                  <h6 class="fw-semibold mb-0">Image</h6>
+                </th>
+               
+                <th class="border-bottom-0">
+                  <h6 class="fw-semibold mb-0">Name</h6>
+                </th>
+                <th class="border-bottom-0">
+                  <h6 class="fw-semibold mb-0">Qyt</h6>
+                </th>
+                <th class="border-bottom-0">
+                  <h6 class="fw-semibold mb-0">Price</h6>
+                </th>
+                
+                <th class="border-bottom-0">
+                  <h6 class="fw-semibold mb-0">weight</h6>
+                </th>
+              
+              </tr>
+            </thead>
+            <tbody>
+             
+             {% for x in data %}
+             <tr>
+               
+               <td class="border-bottom-0">
+                   <h6 class="fw-semibold mb-1"></h6>
+ 
+                   
+                 
+ 
+                <img src="{{ x.product.img1.url }}" alt="" width="35" height="35" class="rounded-circle">
+ 
+               </td>
+          
+               <td class="border-bottom-0">
+                 <p class="mb-0 fw-normal">{{ x.product.name }}</p>
+               </td>
+               <td class="border-bottom-0">
+                <p class="mb-0 fw-normal"> {{ x.quantity }}</p>
+              </td>
+               <td class="border-bottom-0">
+                 <p class="mb-0 fw-normal">₹ {{ x.total_price }}</p>
+               </td>
+               
+               <td class="border-bottom-0">
+                <p class="mb-0 fw-normal">{{ x.product.weight }}</p>
+              </td>
+             
+             </tr> 
+              {% endfor %}  
+             {% else %}
+             <tr>
+              
+                <td colspan="5"><center>-----------------No orders found-----------------</center></td>
+              
+             </tr>
+             {% endif %}       
+            </tbody>
+          </table>
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+
+<div class="container mt-5">
+<div class="row">
+  {% if data %}
+      {% for x in data %}
+          <div class="col-12 col-md-4 mb-3">
+              <div class="d-flex align-items-center">
+                  <div class=" col-4">
+                      <img src="{{ x.product.img1.url }}" class="img-fluid" alt="{{ x.name }}" style="max-width: 100px;">
+                     
+                  </div>
+                  <div class="col-8">
+                    <button class="w-100 btn cart-btn name" data-id="{{ x.id }}" data-action="add">
+                       {{ x.product.name }}
+                  </button>
+                      <p class="mb-1  fw-bold name"></p>
+                      <div  class="card-body">
+                          <div class="align-items-center">
+                              {% if x.total_price %}
+                                  <p class="card-text product_para"><b>Price</b>: <span class="price">{{ x.total_price }}</span> ₹ {% if x.discount_price %}<span style="opacity: 0.3;" class="text-decoration-line-through">{{ x.product.original_price }} ₹</span>{% endif %} </p>
+                              {% endif %}
+                              <p class="product_para" style="margin-top: -19px;">
+                              <b>Quantity: </b> {{ x.quantity }} Qty
+                              </p>
+                              <p class="product_para" style="margin-top: -19px;">
+                                  {% if x.product.weight %}
+                                          <span><b>Weight</b>: {{ x.product.weight }}</span>
+                                      {% endif %}
+                                      {% if x.product.inches %}
+                                          <span style="margin-left: 10px;">Inches: {{ x.product.inches }}</span>
+                                  {% endif %}
+                              </p>
+                                      <style>
+                                         
+                                      </style>
+                          
+                              
+                
+                          </div>
+                      </div>
+                  </div>
+                  
+              </div>
+          </div>
+      {% endfor %}
+      {% else %}
+      <p class="text-center">-----------------No Orders found-----------------</p>
+  {% endif %}
+</div>
+</div>
+
+
+<div class="mt-5 d-flex justify-content-center">
+  <b>Total: {{ tot }} ₹</b>
+</div>
+
+
+
+{% if data %}
+<div class="text-center mt-3 mb-5">
+  <a href="/order_success">
+    <button class="btn btn-primary">Click to Pay the advance</button>
+  </a>
+</div>
+{% endif %}
+
+{% endblock %}
+
+
+
+
+
+     
+
+
+
+
+
+
+
+

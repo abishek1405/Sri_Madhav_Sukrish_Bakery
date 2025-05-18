@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<div class="bg-white container mb-5 mt-5 p-5">
+    <h2 class="text-center login_head">Change Password</h2>
+    
+    <form method="POST" class="mt-4">
+        {% csrf_token %}
+
+
+        <div class="mb-3">
+            <label for="new_password" class="form-label">New Password</label>
+            <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Enter new password" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="confirm_password" class="form-label">Confirm New Password</label>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm new password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Change Password</button>
+    </form>
+
+    {% if messages %}
+        <div class="mt-4">
+            <ul class="list-group">
+                {% for message in messages %}
+                    <li class="list-group-item list-group-item-{{ message.tags }} text-danger">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

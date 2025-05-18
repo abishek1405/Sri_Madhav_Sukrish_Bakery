@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+
+    @media screen and (max-width: 480px) {
+    
+    }
+    .name{
+        font-size: 14px;
+    }
+    .product_para{
+        font-size: 12px;
+        margin-top: -12;
+    }
+
+    .quantity{
+        border: none;
+        width: 25px;
+        margin: 0px;
+        padding: 0px;
+        text-align: center;
+        font-size: 12px;
+    }
+    .minus-btn{
+        padding: 0px 10px;
+        margin: 0px !important;
+        border:none;
+        background-color: green;
+        color: white;
+        opacity: 0.5;
+        font-size: 12px;
+    }
+    .plus-btn{
+        padding: 0px 8px;
+        margin: 0px !important;
+        border:none;
+        background-color: green;
+        color: white;
+        opacity: 0.5;
+        font-size: 12px;
+    }
+    .qty{
+        margin-top: -14px;
+    }
+    .cart-btn{
+        font-size: 12px;
+        padding: 3px;
+        color:white;
+        background-color:green;
+        margin-top: 6px;
+    }
+    .cancel-btn{
+        font-size: 12px;
+        padding: 3px;
+        color:white;
+        background-color:red;
+        margin-top: 6px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center mt-4 mb-3 font color">{{ x }}</h2>
+        </div>
+    </div>
+  
+
+
+    <div class="row">
+        {% if data %}
+            {% for x in data %}
+                <div class="col-12 col-md-4 mb-3">
+                    <div class="shadow p-2">
+                        <div class="d-flex align-items-center">
+                            <div class=" col-4">
+                                <img src="{{ x.img1.url }}" class="img-fluid" alt="{{ x.name }}" style="max-width: 100px;">
+                               
+                            </div>
+                            <div class="col-8">
+                                <p class="mb-1  fw-bold name">{{ x.name }}</p>
+                                <div  class="card-body">
+                                    <div class="align-items-center">
+                                        {% if x.price %}
+                                            <p class="card-text product_para">Price: </span>  {% if x.price_in_market %}<span style="opacity: 0.3;" class="text-decoration-line-through">{{ x.price_in_market }} ₹</span>{% endif %}<span class="price" style="font-weight: bolder; color: orange;">{{ x.price }} ₹ </p>
+                                        {% endif %}
+                                        <p class=" product_para" style="margin-top: -19px;">
+                                            {% if x.weight %}
+                                                    <span>Weight: {{ x.weight }}</span>
+                                                {% endif %}
+                                                {% if x.inches %}
+                                                    <span style="margin-left: 10px;">Inches: {{ x.inches }}</span>
+                                            {% endif %}
+                                        </p>
+                                                <style>
+                                                   
+                                                </style>
+                                        <div class="d-flex qty">
+                                            <button class="btn btn-outline-secondary minus-btn" data-id="{{ x.id }}">-</button>
+                                            <input type="text" readonly class="form-control  quantity" value="1" min="1" data-id="{{ x.id }} Qty">
+                                            <button class="btn btn-outline-secondary plus-btn" data-id="{{ x.id }}">+</button>
+                                        </div>
+                                        <button class="w-100 btn cart-btn" data-id="{{ x.id }}" data-action="add">
+                                            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                        </button>
+                                        <button class="w-100 btn cancel-btn d-none" data-id="{{ x.id }}" data-action="remove">
+                                            <i class="fa-solid fa-cart-shopping"></i> Cancel Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% else %}
+            <p class="text-center">-----------------No data found-----------------</p>
+        {% endif %}
+    </div>
+    
+
+
+
+    
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Function to handle quantity adjustment
+        $('.plus-btn').click(function() {
+            var input = $(this).siblings('.quantity');
+            var newVal = parseInt(input.val()) + 1;
+            input.val(newVal);
+            updatePrice(input);
+        });
+
+        $('.minus-btn').click(function() {
+            var input = $(this).siblings('.quantity');
+            var newVal = parseInt(input.val()) - 1;
+            if (newVal > 0) {
+                input.val(newVal);
+                updatePrice(input);
+            }
+        });
+
+        // Function to update the price based on quantity
+        function updatePrice(input) {
+            var quantity = parseInt(input.val());
+            var price = parseFloat(input.closest('.card-body').find('.price').data('base-price'));
+            var newPrice = (price * quantity).toFixed(2);
+            input.closest('.card-body').find('.price').text(newPrice);
+        }
+
+        // Initial setting of base price as data attribute
+        $('.price').each(function() {
+            $(this).data('base-price', parseFloat($(this).text()));
+        });
+
+        // Function to handle add to cart and cancel buttons
+        $('.cart-btn, .cancel-btn').click(function() {
+            var button = $(this);
+            var recipe_id = button.data('id');
+            var action = button.data('action');
+            var quantity = parseInt(button.closest('.card-body').find('.quantity').val());
+
+            // Check if user is authenticated before making AJAX call
+            var isAnonymous = {{ request.user.is_anonymous|lower }};
+            if (isAnonymous) {
+                window.location.href = '/login';
+                return;
+            }
+
+            $.ajax({
+                url: "{% url 'add_to_cart' %}",
+                type: "POST",
+                data: {
+                    'recipe_id': recipe_id,
+                    'action': action,
+                    'quantity': quantity,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status === 'added') {
+                        button.addClass('d-none');
+                        button.siblings('.cancel-btn').removeClass('d-none');
+                    } else if (response.status === 'removed') {
+                        button.addClass('d-none');
+                        button.siblings('.cart-btn').removeClass('d-none');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        // Function to fetch and update initial cart state
+        function updateCartState() {
+            $.ajax({
+                type: 'GET',
+                url: '/api/get_cart_state/',
+                success: function(response) {
+                    if (response.in_cart) {
+                        $('.cart-btn').addClass('d-none');
+                        $('.cancel-btn').removeClass('d-none');
+                    } else {
+                        $('.cart-btn').removeClass('d-none');
+                        $('.cancel-btn').addClass('d-none');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching cart state:', error);
+                }
+            });
+        }
+
+        // Call updateCartState on document ready
+        updateCartState();
+    });
+
+    // Function to get CSRF token (if using Django's CSRF protection)
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; cookies.length > i; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+{% endblock %}

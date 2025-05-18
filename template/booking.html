@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="container mt-5 mb-5">
+  <div class="row">
+   <center>
+    <div class="col-md-6 col-12">
+      <form method="POST" class="p-4 border rounded">
+        {% csrf_token %}
+        <h3 class="mb-4 font color">Birthday Celebration Prebooking</h3>
+      
+        <div class="mb-3">
+          <label for="name" class="form-label">Your Name</label>
+          <input type="text" class="form-control" id="name" value="{{ user.username }}" name="name" required>
+        </div>
+      
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" value="{{ user.email }}" name="email" required>
+        </div>
+      
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="phone" value="{{ user.phone_number }}" name="phone" required>
+        </div>
+      
+        <div class="mb-3">
+          <label for="date" class="form-label">Date of Celebration</label>
+          <input type="date" class="form-control" id="date" name="date" required>
+        </div>
+      
+        <div class="mb-3">
+          <label for="time" class="form-label">Time of Celebration</label>
+          <input type="time" class="form-control" id="time" name="time" required>
+        </div>
+      
+        <div class="mb-3">
+          <label for="guests" class="form-label">Number of Guests</label>
+          <input type="number" class="form-control" id="guests" name="guests" min="1" required>
+        </div>
+      
+        <div class="mb-3">
+          <label for="requests" class="form-label">Special Requests</label>
+          <textarea class="form-control" id="requests" name="requests" rows="3"></textarea>
+        </div>
+      
+        <button type="submit" class="btn btn-primary">Submit Prebooking</button>
+      </form>
+      
+    </div>
+   </center>
+  </div>
+</div>
+
+
+
+  
+<div class="container mt-5 mb-5">
+  <h2 class="font color">Prebooking List</h2>
+  
+<div class="table-responsive">
+  <table class="table text-nowrap mb-0 align-middle">
+    {% if data %}
+    <thead class="text-dark fs-4">
+      <tr>
+        <th class="border-bottom-0">
+          <h6 class="fw-semibold mb-0">Name</h6>
+        </th>
+        <th class="border-bottom-0">
+          <h6 class="fw-semibold mb-0">Email</h6>
+        </th>
+        <th class="border-bottom-0">
+          <h6 class="fw-semibold mb-0">Phone</h6>
+        </th>
+        <th class="border-bottom-0">
+          <h6 class="fw-semibold mb-0">Date</h6>
+        </th>
+        <th class="border-bottom-0">
+          <h6 class="fw-semibold mb-0">Time</h6>
+        </th>
+        <th class="border-bottom-0">
+          <h6 class="fw-semibold mb-0">Guests</h6>
+        </th>
+        <th class="border-bottom-0">
+          <h6 class="fw-semibold mb-0">Requests</h6>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+     
+     {% for x in data %}
+     <tr>
+       <td class="border-bottom-0">
+         <p class="mb-0 fw-normal">{{ x.name }}</p>
+       </td>
+       <td class="border-bottom-0">
+        <p class="mb-0 fw-normal">{{ x.email }}</p>
+      </td>
+       <td class="border-bottom-0">
+         <p class="mb-0 fw-normal">{{ x.phone }}</p>
+       </td>
+       <td class="border-bottom-0">
+        <p class="mb-0 fw-normal">{{ x.date }}</p>
+      </td>
+      <td class="border-bottom-0">
+        <p class="mb-0 fw-normal">{{ x.time }}</p>
+      </td>
+       <td class="border-bottom-0">
+         <p class="mb-0 fw-normal">{{ x.guests }}</p>
+       </td>
+       <td class="border-bottom-0">
+        <p class="mb-0 fw-normal">{{ x.requests }}</p>
+      </td>
+  
+     </tr> 
+      {% endfor %}  
+     {% else %}
+     <tr>
+      
+        <td colspan="5"><center>-----------------No data found-----------------</center></td>
+      
+     </tr>
+     {% endif %}       
+    </tbody>
+  </table>
+  
+</div>
+</div>
+
+  
+
+
+
+
+
+{% endblock %}
+
+

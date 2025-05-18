@@ -1,0 +1,95 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block content %}
+
+
+<style>
+    input[type=text],input[type=file], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid #d6b0b0;
+    box-sizing: border-box;
+  }
+  
+  
+  
+  .fa-google {
+    background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* button {
+    background-color: #266c87;
+    color: white;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  } */
+  
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  .cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+  }
+  
+    .main{
+      padding-top: 10px !important;
+      
+    }
+    .rown{
+      background-color: white;
+    }
+   
+   
+  </style>
+
+<div class="container mt-5 mb-5">
+    <div class="row rown">
+      
+        <div class="col-12 ">
+           <center>
+            <form method="POST" enctype="multipart/form-data" class="p-5">
+                {% csrf_token %}
+                <label><b>Photo</b></label> <br>
+                <input type="file" name="img" placeholder="vanilla cake, chocolate cake" required><br>
+                <!-- <label><b>Name</b></label> <br>
+                <input type="text" name="name" placeholder="vanilla cake, chocolate cake" required><br>
+                 -->
+                <center>
+                    <input type="submit" class=" btn btn-primary"><br><br> 
+                </center>
+            </form>
+           </center>
+
+           {% if data %}
+           <div class="container mt-3">
+             <div class="row">
+               {% for x in data %}
+               <div class="col-6 col-md-3 mb-4">
+               <div class="shadow p-3">
+                <div class="square-container">
+                  <img src="{{ x.img.url }}" class="w-100 mb-2 product_img">
+              </div>
+                <!-- <p class="text-center">{{ x.name }}</p> -->
+                <center><a href="/delete_photo/{{ x.id }}"><button class="btn btn-danger w-100 mb-2">Delete Photos</button></a></center>
+               </div>
+              </div>
+               {% endfor %}
+             </div>
+           </div>
+          {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

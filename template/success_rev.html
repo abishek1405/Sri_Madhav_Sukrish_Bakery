@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .containerrr {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .order-id {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #555;
+        }
+        body{
+            font-family: lato !important;
+        }
+    </style>
+
+
+    <div class="containerrr">
+        <h3 class="text-success">{{ data }} has been successfully submitted!</h3>
+        <p></p>
+        <p class="">Note: <span class="text-warning">Thank you for your valuable {{ data }} 😊.</span></p>
+    <a href="/"><button class="btn btn-success">Go Home</button></a>
+    </div>
+    <audio id="successAudio" src="{% static 'img/success.m4a' %}" autoplay></audio>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var successAudio = document.getElementById("successAudio");
+            successAudio.play().catch(function(error) {
+                console.log('Audio playback failed: ', error);
+            });
+        });
+    </script>
+    
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

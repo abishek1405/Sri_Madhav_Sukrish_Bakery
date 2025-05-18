@@ -1,0 +1,219 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .banner-img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }      
+    video {
+        display: block;
+        margin: 0 auto;
+    }
+</style>
+<style>
+
+    .nav-head{
+        text-decoration: none;
+        margin-left: 10px;
+        color: #FD0000 !important;
+        font-weight: bolder;
+        letter-spacing: 2px;
+        text-shadow: 0px 0px 20px #fd00007c;
+        font-size: large;
+    }
+    .btn1{
+        color: #FD0000 !important;
+        border: 1px solid #FD0000;
+        padding: 5px 30px;
+        font-family: 'roboto';
+    }
+    .btn2{
+        color: #ffffff !important;
+        border: 1px solid #FD0000;
+        padding: 5px 30px;
+        font-family: 'roboto';
+        background-color: #FD0000;
+    }
+  
+    .banner{
+        height: 100vh;
+        /* background-color: #FFEACF; */
+    }
+    .banner-container{
+        height: 100vh;
+    }
+    .banner-container h1{
+        font-family: Copperplate, Papyrus, fantasy;
+        font-weight: bolder;
+    }
+    .banner-container p{
+        font-family: Garamond, serif;
+        font-weight:600;
+    }
+    .video{
+        border-radius: 10px;
+    }
+    .modal-body p{
+        text-indent: 30px;
+    }
+    .navbar-nav a{
+        color: #FD0000 !important;
+    }
+    .navbar-toggler{
+        font-size: 10px !important;
+    }
+    @media screen and (max-width: 480px) {
+        .nav-head{
+            font-size: medium;
+        }
+
+        .banner-container h1{
+        font-size: 10px;
+    }
+    .banner-container p{
+        font-size: 7px;
+    }
+    .banner{
+        height: 30vh;
+    }
+    .banner-container{
+        height: 30vh;
+    }
+    .btn1{
+        padding: 3px 15px;
+        font-size: 6px;
+    }
+    .btn2{
+        padding: 3px 15px;
+        font-size: 6px;
+    }
+    .div-btn{
+        margin-top: -18px;
+    }
+    .shadow p{
+        font-size: 12px;
+    }
+    }
+    .shadow p{
+        font-family: "Sofia", sans-serif;
+        font-weight: 700;
+    }
+    .fantasy{
+        font-family: "Sofia", sans-serif;
+        font-weight: bolder;
+        color:#FD0000;
+    }
+    .head{
+        color: #FD0000;
+    }
+    .para{
+        font-family: "Sofia", sans-serif;
+    }
+    
+</style>
+
+
+<div class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-12 d-flex justify-content-center banner-container">
+                <div class="d-flex flex-column justify-content-center">
+                    <h1 class="text-center font color">Welcome to Admin Page!</h1>
+                    <p class="baner-paragraph">
+                        At Sri Madhav Sukrish Bekary & Sweets, we believe that every bite should be a delightful experience. Our passion for baking drives us to create mouth-watering pastries, cakes, and breads that are as beautiful to look at as they are delicious to eat. We use only the finest ingredients, ensuring that each product is made with love and care.
+                    </p>
+                    <div class="text-center div-btn">
+                        <a href="/admin_review"><button type="button" class="btn1 btn btn-outline-dark" >Reviews & Comments</button></a>
+                        <a href="/celebration"><button type="button" class="btn1 btn btn-outline-dark" >Celebration</button></a>
+                        <!-- <button class="btn2 btn btn-warning">Order Now</button> -->
+                    </div>
+
+
+
+
+                   
+                    
+
+
+                </div>
+            </div>
+          
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3 class="para font color ">Offer Form</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label  for="name" class="font color">Offers:</label>
+                            <input type="text" value="{{ off.of }}" class="mt-2 form-control" name = 'offer' placeholder="Sri Madhav Sukrish Bekary & Sweets Offers">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container mt-3 mb-5">
+    <div class="table-responsive">
+        <table class="table text-nowrap mb-0 align-middle">
+          {% if off %}
+          <thead class="text-dark fs-4">
+            <tr>
+              <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0 font color">Offers</h6>
+              </th>
+              <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Action</h6>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+           <tr>
+             <td class="border-bottom-0">
+               <p class="mb-0 fw-normal">{{ off.of }}</p>
+             </td>
+             <td class="border-bottom-0">
+                <a href="/off_delete/{{ off.id }}"><i style="color: red; font-size: 20px; margin-left: 15px;" class="fa fa-trash"></i></a>
+              </td>
+           </tr> 
+            
+           {% else %}
+           <tr>
+            
+              <td colspan="5"><center>-----------------No data found-----------------</center></td>
+            
+           </tr>
+           {% endif %}       
+          </tbody>
+        </table>
+        
+        
+      </div>    
+</div>
+
+
+
+
+
+
+
+{% endblock %}

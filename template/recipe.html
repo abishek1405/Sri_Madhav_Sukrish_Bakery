@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .card-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .card {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: radial-gradient(#f6d365, #fda085); /* Gradient background */
+        width: 100%;
+        max-width: 280px;
+        height: 350px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-title {
+        font-family: 'Poppins', sans-serif;
+        width: 100%;
+        font-size: 1.5rem;
+        color: white;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 0px;
+    }
+
+    .card-img {
+        border-radius: 50%;
+        width: 180px;
+        /* height: 150px; */
+        object-fit: cover;
+        border: 5px solid white;
+        display: block;
+        margin: 10px auto;
+    }
+
+    .card-btn {
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+        background-color: #ff7e67;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+    }
+
+    .card-btn:hover {
+        background-color: #ff5a3a;
+    }
+
+    .text-center h2 {
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+        margin-bottom: 40px;
+    }
+
+    /* @media screen and (max-width: 768px) {
+        .card {
+            width: 90%;
+        }
+    } */
+
+    .font{
+    font-family: 'Courier New', Courier, monospace !important;
+    font-weight: bolder !important;
+  }
+
+     
+</style>
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center font color">Product Category</h2>
+        </div>
+    </div>
+
+    <div class="card-container">
+        {% if data %}
+        {% for x in data %}
+        
+            <a href="/list_recipe/{{ x.category }}/" class="text-decoration-none card">
+                <div class="card-title">{{ x.category }}</div>
+                <img src="{{ x.img.url }}" alt="{{ x.category }}" class="card-img">
+                <button class="card-btn">Explore {{ x.category }}</button>
+            </a>
+        
+        {% endfor %}
+    {% endif %}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{% endblock %}

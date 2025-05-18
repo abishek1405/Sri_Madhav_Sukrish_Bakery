@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<style>
+  
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+
+.social-containerr {
+	margin: 20px 0;
+}
+
+.social-containerr a {
+	border: 1px solid #DDDDDD;
+	border-radius: 50%;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 5px;
+	height: 40px;
+	width: 40px;
+  text-decoration: none;
+  color: black;
+}
+.row{
+  height: 80vh;
+}
+
+.login_head{
+  font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    color: orange;
+}
+.login_label{
+  font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    color: orange;
+}
+@media (max-width: 405px) {
+        .login_head {
+        font-size: 20px;
+    }}
+
+    .form-control{
+      border-color: orange;
+    }
+</style>
+<div class="container ">
+  <div class="row d-flex flex-column justify-content-center">
+   <div class="d-flex justify-content-center">
+    <div class="shadow p-3 col-12 col-md-5 border rounded-3">
+      <h2 class="login_head text-center">Sign In</h2>
+        <center>
+            <div class="social-containerr">
+              <a href="#" class="social a"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="social a"><i class="fa-brands fa-whatsapp"></i></a>
+              <a href="#" class="social a"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+        </center>
+      <form method="POST">
+        {% csrf_token %}
+        <div>
+          <label class="text-left p-1 login_label" for="">User Name</label>
+          <input name="username" type="text" class="form-control w-100" placeholder="Enter Your User Name" required>
+        </div>
+        <div class="mt-2">
+          <label class="text-left p-1 login_label" for="">Password</label>
+          <input name="password" type="password" class="form-control w-10" placeholder="Enter Your Password" required>
+        </div>
+      
+        <center>
+          {% if error %}
+          <center>
+              <div style="color: red;" class="mt-2" id="errorMessage">{{ error }}</div>
+          </center>
+          <script>
+              setTimeout(function() {
+                  document.getElementById('errorMessage').style.display = 'none';
+              }, 3000);
+          </script>
+      {% elif messages %}
+          {% for message in messages %}
+              <center>
+                  <div style="color: red;" class="mt-2" id="errorMessage{{ forloop.counter }}">{{ message }}</div>
+              </center>
+              <script>
+                  setTimeout(function() {
+                      document.getElementById('errorMessage{{ forloop.counter }}').style.display = 'none';
+                  }, 3000);
+              </script>
+          {% endfor %}
+      {% endif %}
+      
+        </center>
+
+        <center><button style="background: orange; color: white;" class="login_label btn btn-warning mt-3">Login</button></center>
+        <div class="d-flex justify-content-between">
+          <p style="font-size: small;" class="mt-3">Don't have an account? <a href="/signup">Sign up</a></p>
+          <p style="font-size: small;" class="mt-3"><a href="/forgot_verifiy">Forgot Password</a></p>
+        </div>
+        
+      </form>
+    </div>
+   </div>   
+  </div>
+</div>
+
+		
+
+
+
+
+{% endblock %}

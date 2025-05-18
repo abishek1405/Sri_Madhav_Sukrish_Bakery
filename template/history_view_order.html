@@ -1,0 +1,119 @@
+
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+   .full-height-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .centered-form {
+            text-align: center;
+        }
+</style>
+<div class="container">
+  <div class="col-12 col-lg-12 d-flex align-items-stretch">
+    <div class="card w-100 mt-3 mb-5">
+      <div class="card-body p-4 ">
+        <div>
+          <h5 class="card-title fw-semibold">History of Orders</h5>
+        
+          <script>
+              function confirmCancel() {
+                  return confirm('Are you sure you want to cancel the order?');
+              }
+          </script>
+        </div>
+        <br>
+        <div class="table-responsive">
+          <table class="table text-nowrap mb-0 align-middle">
+            {% if data %}
+              <thead class="text-dark fs-4">
+                <tr>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Image</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Category</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Name</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Qty</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Price</h6>
+                  </th>
+                  
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Weight</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Inches</h6>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for x in data %}
+                  <tr>
+                    <td class="border-bottom-0">
+                      <img src="{{ x.bakery_recipe.img1.url }}" alt="" width="35" height="35" class="rounded-circle">
+                    </td>
+                    <td class="border-bottom-0">
+                      <p class="mb-0 fw-normal">{{ x.bakery_recipe.category }}</p>
+                    </td>
+                    <td class="border-bottom-0">
+                      <p class="mb-0 fw-normal">{{ x.bakery_recipe.name }}</p>
+                    </td>
+                    <td class="border-bottom-0">
+                      <p class="mb-0 fw-normal">{{ x.qty }}</p>
+                    </td>
+                    <td class="border-bottom-0">
+                      <p class="mb-0 fw-normal">₹ {{ x.total_price }}</p>
+                    </td>
+                    <td class="border-bottom-0">
+                      <p class="mb-0 fw-normal">{{ x.bakery_recipe.weight }}</p>
+                    </td>
+                    <td class="border-bottom-0">
+                      <p class="mb-0 fw-normal">{{ x.bakery_recipe.inches }}</p>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            {% else %}
+              <tr>
+                <td colspan="7"><center>No data found.</center></td>
+              </tr>
+            {% endif %}
+          </table>
+          <div class="d-flex justify-content-end">
+            <b>Total: {{ total_price }} ₹</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+
+
+
+     
+
+
+
+
+
+
+
+

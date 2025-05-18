@@ -1,0 +1,95 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block content %}
+
+
+<style>
+ 
+  
+  
+  .fa-google {
+    background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* button {
+    background-color: #266c87;
+    color: white;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  } */
+  
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  .cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+  }
+  
+    .main{
+      padding-top: 10px !important;
+      
+    }
+    .rown{
+      background-color: white;
+    }
+   .form-control{
+    border-color: orange;
+   }
+  </style>
+
+<div class="container mt-5 mb-5">
+    <div class="row rown">
+      <center> 
+      <div class="col-12 rounded-3 border col-md-6">
+          
+            <form method="POST" enctype="multipart/form-data" class="p-5">
+                {% csrf_token %}
+                <label class="font color" for="username"><b>Category</b></label> <br>
+                <select class="form-control" name="category"> <!-- Added size attribute -->
+                    {% for x in dis %}
+                    <option value="{{ x.category }}">{{ x.category }}</option>
+                    {% endfor %}
+                </select> <br>
+
+                <label class="font color"><b>Dish Photo</b></label> <br>
+                <input class="form-control" type="file" name="img1" placeholder="vanilla cake, chocolate cake" required><br>
+
+                <label class="font color"><b>Dish Name</b></label> <br>
+                <input class="form-control" type="text" name="name" placeholder="vanilla cake, chocolate cake" required><br>
+
+                <label class="font color"><b>Price</b></label> <br>
+                <input class="form-control" type="text" name="price" placeholder="Ex: 20" required><br>
+
+                <label class="font color"><b>Price in market</b></label> <br>
+                <input class="form-control" type="text" name="price_in_market" placeholder="Ex: 25"><br>
+
+                <label class="font color"><b>Weight or Litre</b></label> <br>
+                <input class="form-control" type="text" name="weight" placeholder="Ex: 20g"><br>
+                
+                <label class="font color"><b>Inches</b></label><br>
+                <input class="form-control" type="text" name="inches" placeholder="Ex: 2.2 inch"><br>
+
+
+                <center>
+                    <input type="submit" class=" btn btn-primary"><br><br> 
+                </center>
+            </form>
+          
+        </div>
+      </center>
+    </div>
+</div>
+
+
+
+{% endblock %}

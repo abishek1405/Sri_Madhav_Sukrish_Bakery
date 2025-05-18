@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .containerrr {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .order-id {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #555;
+        }
+        body{
+            font-family: lato !important;
+        }
+        @media (max-width:600px) {
+            .text-success{
+                font-size: 16px;
+            }
+            .order_para{
+                font-size: 12px;
+                text-align: justify;
+            }
+        }
+    </style>
+
+
+    <div class="containerrr container ">
+        <h3 class="text-success">Order has been successfully placed!</h3>
+        <center>
+            <!-- <img src="{% static 'img/pay.jpg' %}" class="w-75 mt-3 mb-3" alt="GPay QR Code"> -->
+
+            <div id="qrCodeContainer">
+                <img id="qrCodeImage" src="" alt="UPI QR Code" />
+            </div>
+        
+            <script>
+                let upiID = "krisshna.nagarajan-1@oksbi";
+                let amountt = {{ advance }}; 
+                let upiURL = `upi://pay?pa=${upiID}&pn=Krisshna%20Nagarajan&am=${amountt}&cu=INR&tn=Advance%20Payment`;
+                QRCode.toDataURL(upiURL, function (error, url) {
+                    if (error) {
+                        console.error(error);
+                    } else {
+                        document.getElementById("qrCodeImage").src = url;
+                    }
+                });
+            </script>
+
+
+
+        </center>
+        <p class="order_para">The total cost of the order is ₹{{ tot }}. Pay 50% of the amount, which is ₹{{ advance }} as an advance.<a id="paymentid"  target="_blank">Click to pay</a></p>
+        <script>
+            let paymentid = document.getElementById('paymentid');
+            let cost = {{ advance }};
+            paymentid.href = 'upi://pay?pa=krisshna.nagarajan-1@oksbi&pn=Krisshna%20Nagarajan&am='+cost+'&cu=INR&tn=Advance%20Payment';
+        </script>
+        
+        <p class="order_para">
+            Note: <span class=" text-warning">The order will be confirmed again by Sri Madhav Sukrish Bakery, so please wait for the call.</span> <b>The delivery time will be approximately 5 minutes per kilometer.</b></p>
+          
+    <a href="/order"><button class="btn btn-success">Go Order</button></a>
+    </div>
+    <audio id="successAudio" src="{% static 'img/success.m4a' %}" autoplay></audio>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var successAudio = document.getElementById("successAudio");
+            successAudio.play().catch(function(error) {
+                console.log('Audio playback failed: ', error);
+            });
+        });
+    </script>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

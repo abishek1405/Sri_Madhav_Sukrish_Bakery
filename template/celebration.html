@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+{% if prebookings %}
+<div class="container mb-5 mt-5">
+  <h2>Prebooking List</h2>
+  
+  <table class="table table-bordered table-striped">
+      <thead>
+          <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Guests</th>
+              <th>Requests</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for prebooking in prebookings %}
+              <tr>
+                  <td>{{ prebooking.name }}</td>
+                  <td>{{ prebooking.email }}</td>
+                  <td>{{ prebooking.phone }}</td>
+                  <td>{{ prebooking.date }}</td>
+                  <td>{{ prebooking.time }}</td>
+                  <td>{{ prebooking.guests }}</td>
+                  <td>{{ prebooking.requests }}</td>
+              </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+</div>
+
+{% else %}
+<p class="text-center mt-5 mb-5">-----------------No data found-----------------</p>
+{% endif %}
+
+
+
+
+
+{% endblock %}

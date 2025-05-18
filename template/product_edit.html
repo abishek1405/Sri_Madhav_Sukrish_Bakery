@@ -1,0 +1,104 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block content %}
+
+
+<style>
+    input[type=text],input[type=file], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid #d6b0b0;
+    box-sizing: border-box;
+  }
+  
+  
+  
+  .fa-google {
+    background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* button {
+    background-color: #266c87;
+    color: white;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  } */
+  
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  .cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+  }
+  
+    .main{
+      padding-top: 10px !important;
+      
+    }
+    .rown{
+      background-color: white;
+    }
+   
+  </style>
+
+<div class="container mt-5 mb-5">
+    <div class="row rown">
+        <div class="col-12 ">
+           <center>
+            <form method="POST" enctype="multipart/form-data" class="p-5">
+                {% csrf_token %}
+                <label for="username"><b>Category</b></label> <br>
+                <select name="category"> <!-- Added size attribute -->
+                  {% if data %}
+                  <option value="{{ x.category }}">{{ x.category }}</option>
+                  {% endif %}
+                    {% for x in dis %}
+                    <option value="{{ x.category }}">{{ x.category }}</option>
+                    {% endfor %}
+                </select> <br>
+
+                <label><b>Dish Photo</b></label> <br>
+                <center><img src="{{ x.img1.url }}" width='150px' style="border: 1px black solid;" alt=""></center>
+                
+                <input type="file" name="img1" value="{{ x.img1.url }}" placeholder="vanilla cake, chocolate cake"><br>
+
+                <label><b>Dish Name</b></label> <br>
+                <input type="text" value="{{ x.name }}"  name="name" placeholder="vanilla cake, chocolate cake" required><br>
+
+                <label><b>Price</b></label> <br>
+                <input type="text"  value="{{ x.price }}" name="price" placeholder="Ex: 20" required><br>
+
+                <label class=""><b>Price in market</b></label> <br>
+                <input class="form-control" type="text" value="{{ x.price_in_market }}" name="price_in_market" placeholder="Ex: 25"><br>
+
+                <label><b>Weight</b></label> <br>
+                <input type="text" value="{{ x.weight }}"  name="weight" placeholder="Ex: 20g"><br>
+                
+                <label><b>Inches</b></label><br>
+                <input type="text" value="{{ x.inches }}"  name="inches" placeholder="Ex: 2.2 inch"><br>
+
+
+                <center>
+                    <input type="submit" class=" btn btn-primary"><br><br> 
+                </center>
+            </form>
+           </center>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

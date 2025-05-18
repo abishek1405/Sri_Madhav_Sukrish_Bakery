@@ -1,0 +1,124 @@
+
+     
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}MSB{% endblock %}
+
+{% block content %}
+
+<style>
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+.frr {border: 3px solid #004958;
+background-color: #ffffff;
+border-radius: 20px;
+}
+
+input[type=text], input[type=url], input[type=number]  {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #d6b0b0;
+  box-sizing: border-box;
+}
+
+
+
+.fa-google {
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+
+
+img.avatar {
+  width: 60%;
+  border-radius: 50%;
+}
+
+.containerr {
+  padding: 10px;
+}
+
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+ 
+}
+
+
+</style>
+
+<body style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+
+  <center>
+    
+<div class="login  mt-5 mb-5 container  col-12 col-md-8">
+  
+  <form  method="POST">
+    {% csrf_token %}
+      <div class="frr pb-3">
+        
+      <center><h2 class="pt-3" >EDIT PROFILE </h2></center>
+  
+     
+  
+          <div class="container containerr">
+          
+            <label for="number"><b>Mobile Number</b></label>
+            <input type="number" id="number" name="number" value="{{ data.phone_number }}" placeholder="Enter Number" pattern="[0-9]{10}" required>
+  
+            <label for="address"><b>Address</b></label>
+            <input type="text" id="address" name="address" value="{{ data.address }}" placeholder="Enter Address" required>
+  
+             <label for="postcode"><b>Post Code</b></label>
+            <input type="text" id="postcode" name="postcode" value="{{ data.postcode }}" placeholder="Enter Post Code" required>
+  
+            <label for="near_by"><b>Nearby</b></label>
+            <input type="text" id="near_by" name="near_by" value="{{ data.near_by }}" placeholder="Enter Nearby Place" required>
+  
+            
+            <hr>
+            <button class="btn btn-primary" type="submit">Update</button>
+            <button type="button" class="btn btn-primary" onclick="location.href='/profile'">Cancel</button>
+            
+          </div>
+  
+  
+      </div>
+    </form>
+  </div>
+  </center>
+
+</body>
+
+
+
+{% endblock %}

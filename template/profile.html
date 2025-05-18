@@ -1,0 +1,54 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+
+
+<style>
+
+.profile{
+  height: 100vh;
+  overflow: auto;
+}
+.pro{
+  background-color: rgb(255, 255, 255) !important;
+  }
+.pro p{
+  color: black !important;
+}
+.btn{
+
+
+  font-weight: bolder;
+  padding: 5px 40px;
+}
+</style>
+
+
+  <div class="container">
+    <div class="col-12">
+      <div class="d-flex flex-column justify-content-center profile placeholder-glow">
+        <center>
+          <div class="pro text-center p-4">
+            <h1 class="text-center font color">PROFILE</h1>
+            <img src="{% static 'img/profile.png' %}" class="p-3" width="200" alt="">
+            <p class=""><b>Name:</b> {{ request.user }}</p>
+            <p class=""><b>phone number:</b> {{ data.phone_number }}</p>
+            <!-- <p class="">City: {{ data.address }}, {{ data.postcode }}</p>            
+            <p class="">Near by: {{ data.near_by }}</p> -->
+            <a href="/profile_edit/{{ data.id }}"><button class="btn btbtn btn-primary">EDIT</button></a>
+            <a href="/logout"><button class="btn btn-warning">Logout</button></a>
+          </div>
+        </center>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}
+
+     
